@@ -27,7 +27,12 @@ def create_app(test_config=None):
     def hello_world():
         return "<h1>Hello World!</h1>"
 
+    # create the data base schema
     from . import db
     db.init_app(app)
+
+    # register auth bluprint
+    from . import auth
+    app.register_blueprint(auth.bp)
 
     return app
