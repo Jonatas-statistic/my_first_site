@@ -41,7 +41,7 @@ def register():
 
 @bp.route('/login', methods=('GET', 'POST'))
 def login():
-    if request == 'POST':
+    if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
         db = get_db()
@@ -50,7 +50,7 @@ def login():
             'SELECT * FROM user WHERE username = ?', (username,)
         ).fetchone()
 
-        if user in None:
+        if user is None:
             error = 'Incorrect username.'
         elif not check_password_hash(user['password'], password):
             error = 'Incorrect password.'
@@ -65,7 +65,7 @@ def login():
     return render_template('auth/login.html')
 
 
-@bp.rout('/logout')
+@bp.route('/logout')
 def logout():
     session.clear()
     return redirect(url_for('index'))
