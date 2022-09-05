@@ -22,17 +22,18 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    # a single page that says hello
-    @app.route("/")
-    def hello_world():
-        return "<h1>Hello World!</h1>"
 
     # create the data base schema
     from . import db
     db.init_app(app)
 
-    # register auth bluprint
+    # register auth blueprint
     from . import auth
     app.register_blueprint(auth.bp)
+
+    # register blog blueprint
+    from . import blog
+    app.register_blueprint(blog.bp)
+    app.add_url_rule('/', endpoint='index')
 
     return app
