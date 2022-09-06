@@ -23,6 +23,11 @@ def create_app(test_config=None):
         pass
 
 
+    # hello world
+    @app.route('/hello')
+    def hello():
+        return "Hello, World!"
+
     # create the data base schema
     from . import db
     db.init_app(app)
